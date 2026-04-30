@@ -1,8 +1,29 @@
-<h2>Iniciar sesión</h2>
+{% extends "base.html" %}
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
+{% block title %}Iniciar sesion | Sistema de Evaluaciones{% endblock %}
 
-    <button type="submit">Ingresar</button>
-</form>
+{% block content %}
+<section class="auth-layout">
+    <div>
+        <p class="eyebrow">Acceso del equipo</p>
+        <h1>Iniciar sesion</h1>
+        <p class="lead">
+            Entra con tu usuario para consultar el modulo de calificaciones y
+            continuar el trabajo del proyecto.
+        </p>
+    </div>
+
+    <div class="auth-panel">
+        <h2>Credenciales</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button" type="submit">Ingresar</button>
+        </form>
+        <p class="auth-footer">
+            No tienes cuenta?
+            <a href="{% url 'registro' %}">Registrate aqui</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

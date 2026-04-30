@@ -1,10 +1,44 @@
-<h1>Sistema de Evaluaciones</h1>
+{% extends "base.html" %}
 
-{% if user.is_authenticated %}
-    <p>Bienvenido, {{ user.username }}</p>
-    <a href="{% url 'listar' %}">Ver calificaciones</a>
-    <br>
-    <a href="{% url 'logout' %}">Cerrar sesión</a>
-{% else %}
-    <a href="{% url 'login' %}">Iniciar sesión</a>
-{% endif %}
+{% block title %}Inicio | Sistema de Evaluaciones{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">Panel academico</p>
+        <h1>Sistema de Evaluaciones</h1>
+        <p class="lead">
+            Consulta y administra las calificaciones de estudiantes desde una
+            interfaz clara, rapida y preparada para el trabajo del equipo.
+        </p>
+
+        <div class="hero-actions">
+            {% if user.is_authenticated %}
+                <a class="button" href="{% url 'listar' %}">Ver calificaciones</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="button secondary" type="submit">Cerrar sesion</button>
+                </form>
+            {% else %}
+                <a class="button" href="{% url 'login' %}">Iniciar sesion</a>
+                <a class="button secondary" href="{% url 'registro' %}">Registrarse</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <aside class="summary-panel" aria-label="Resumen del sistema">
+        <div class="metric">
+            <span>Estado</span>
+            <strong>{% if user.is_authenticated %}Activo{% else %}Acceso seguro{% endif %}</strong>
+        </div>
+        <div class="metric">
+            <span>Usuario</span>
+            <strong>{% if user.is_authenticated %}{{ user.username }}{% else %}Invitado{% endif %}</strong>
+        </div>
+        <div class="metric">
+            <span>Modulo</span>
+            <strong>Calificaciones</strong>
+        </div>
+    </aside>
+</section>
+{% endblock %}
