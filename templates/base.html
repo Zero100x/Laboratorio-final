@@ -1,0 +1,38 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sistema de Evaluaciones{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/app.css' %}">
+</head>
+<body>
+    <header class="topbar">
+        <a class="brand" href="{% url 'inicio' %}">
+            <span class="brand-mark">SE</span>
+            <span>
+                <strong>Sistema de Evaluaciones</strong>
+                <small>Gestion academica</small>
+            </span>
+        </a>
+
+        <nav class="nav-actions" aria-label="Navegacion principal">
+            {% if user.is_authenticated %}
+                <a href="{% url 'listar' %}">Calificaciones</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button class="link-button" type="submit">Cerrar sesion</button>
+                </form>
+            {% else %}
+                <a href="{% url 'registro' %}">Registrarse</a>
+                <a class="nav-button" href="{% url 'login' %}">Iniciar sesion</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main class="page-shell">
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
