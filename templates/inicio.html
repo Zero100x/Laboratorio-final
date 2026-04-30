@@ -1,0 +1,10 @@
+<h1>Sistema de Evaluaciones</h1>
+
+{% if user.is_authenticated %}
+    <p>Bienvenido, {{ user.username }}</p>
+    <a href="{% url 'listar' %}">Ver calificaciones</a>
+    <br>
+    <a href="{% url 'logout' %}">Cerrar sesión</a>
+{% else %}
+    <a href="{% url 'login' %}">Iniciar sesión</a>
+{% endif %}
