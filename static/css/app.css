@@ -307,6 +307,39 @@ h2 {
     overflow: hidden;
 }
 
+.table-scroll {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.data-table th {
+    color: var(--muted);
+    background: #f8fafc;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+}
+
+.data-table .numeric {
+    text-align: center;
+}
+
+.data-table .strong {
+    color: var(--primary-dark);
+    font-weight: 800;
+}
+
 .empty-state {
     padding: clamp(1.5rem, 5vw, 3rem);
     text-align: center;

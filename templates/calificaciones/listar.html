@@ -10,20 +10,95 @@
         <p>Usuario autenticado: {{ user.username }}</p>
     </div>
 
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button class="link-button" type="submit">Cerrar sesion</button>
-    </form>
+    <div class="hero-actions">
+        <a class="button" href="{% url 'crear' %}">Crear calificacion</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="link-button" type="submit">Cerrar sesion</button>
+        </form>
+    </div>
 </section>
 
 <section class="table-panel">
-    <div class="empty-state">
-        <strong>Aun no hay calificaciones registradas</strong>
-        <p>
-            Cuando el equipo agregue el modelo y los registros, este espacio
-            puede convertirse en una tabla con estudiante, nota, promedio y
-            acciones de edicion o eliminacion.
-        </p>
-    </div>
+    {% if calificaciones %}
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Identificacion</th>
+                        <th>Asignatura</th>
+                        <th>Nota 1</th>
+                        <th>Nota 2</th>
+                        <th>Nota 3</th>
+                        <th>Promedio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for calificacion in calificaciones %}
+                        <tr>
+                            <td>{{ calificacion.nombre_estudiante }}</td>
+                            <td>{{ calificacion.identificacion }}</td>
+                            <td>{{ calificacion.asignatura }}</td>
+                            <td class="numeric">{{ calificacion.nota1 }}</td>
+                            <td class="numeric">{{ calificacion.nota2 }}</td>
+                            <td class="numeric">{{ calificacion.nota3 }}</td>
+                            <td class="numeric">
+                                {% if calificacion.promedio >= 3.0 %}
+                                    <span style="padding:0.25rem 0.75rem;
+                                                 background:var(--primary-soft);
+                                                 color:var(--primary);
+                                                 border:1px solid #cfe7df;
+                                                 border-radius:2rem;
+                                                 font-weight:750;">
+                                        {{ calificacion.promedio }}
+                                    </span>
+                                {% else %}
+                                    <span style="padding:0.25rem 0.75rem;
+                                                 background:#fff1f0;
+                                                 color:var(--danger);
+                                                 border:1px solid #ffd2cf;
+                                                 border-radius:2rem;
+                                                 font-weight:750;">
+                                        {{ calificacion.promedio }}
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td style="text-align:center;">
+                                <span style="color:var(--muted); font-size:0.85rem;">—</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <strong>Aun no hay calificaciones registradas</strong>
+            <p>
+                Cuando crees una calificacion desde el boton superior, aparecera
+                automaticamente en esta tabla con el promedio calculado.
+            </p>
+        </div>
+    {% endif %}
 </section>
-{% endblock %}
+
+<!-- Promedio General del Curso -->
+<div style="margin-top:1.5rem; padding:2rem;
+            background:var(--surface); border:1px solid var(--line);
+            border-radius:0.5rem; box-shadow:var(--shadow); text-align:center;">
+    <p style="margin:0 0 0.25rem; color:var(--muted); font-size:0.78rem;
+              font-weight:800; text-transform:uppercase; letter-spacing:2px;">
+        Promedio General del Curso
+    </p>
+    <p style="margin:0 0 0.5rem; font-size:clamp(2.5rem,5vw,4rem);
+              font-weight:800; color:var(--primary); line-height:1.1;">
+        {{ promedio_general|floatformat:2 }}
+    </p>
+    <p style="margin:0; color:var(--muted); font-size:0.9rem;">
+        Calculado sobre <strong>{{ calificaciones.count }}</strong> registro(s)
+    </p>
+</div>
+
+{% endblock %} 
