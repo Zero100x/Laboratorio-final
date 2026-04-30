@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CalificacionForm, RegistroUsuarioForm
 from .models import Calificacion
@@ -31,6 +31,33 @@ def crear_calificacion(request):
         form = CalificacionForm()
 
     return render(request, 'calificaciones/crear.html', {'form': form})
+
+
+@login_required
+def editar_calificacion(request, calificacion_id):
+    calificacion = get_object_or_404(Calificacion, pk=calificacion_id)
+    if request.method == 'POST':
+        form = CalificacionForm(request.POST, instance=calificacion)
+        if form.is_valid():
+            form.save()
+            return redirect('listar')
+    else:
+        form = CalificacionForm(instance=calificacion)
+
+    return render(
+        request,
+        'calificaciones/editar.html',
+        {'form': form, 'calificacion': calificacion},
+    )
+
+
+@login_required
+def eliminar_calificacion(request, calificacion_id):
+    calificacion = get_object_or_404(Calificacion, pk=calificacion_id)
+    if request.method == 'POST':
+        calificacion.delete()
+        return redirect('listar')
+    return redirect('listar')
 
 
 def registro(request):
