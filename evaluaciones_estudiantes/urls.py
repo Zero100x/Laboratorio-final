@@ -12,6 +12,8 @@ urlpatterns = [
         template_name='registration/login.html'
     ), name='login'),
 
+    path('registro/', views.registro, name='registro'),
+
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 
     path('calificaciones/', include('calificaciones_estudiantes.urls')),

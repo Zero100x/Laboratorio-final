@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Registrarse | Sistema de Evaluaciones{% endblock %}
+
+{% block content %}
+<section class="auth-layout">
+    <div>
+        <p class="eyebrow">Nueva cuenta</p>
+        <h1>Crear usuario</h1>
+        <p class="lead">
+            Registra tu cuenta para entrar al sistema y consultar el modulo de
+            calificaciones del proyecto.
+        </p>
+    </div>
+
+    <div class="auth-panel">
+        <h2>Datos de registro</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button" type="submit">Crear cuenta</button>
+        </form>
+        <p class="auth-footer">
+            Ya tienes cuenta?
+            <a href="{% url 'login' %}">Inicia sesion</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

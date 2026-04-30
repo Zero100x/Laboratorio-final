@@ -1,5 +1,29 @@
-<h1>Listado de Calificaciones</h1>
+{% extends "base.html" %}
 
-<p>Usuario autenticado: {{ user.username }}</p>
+{% block title %}Calificaciones | Sistema de Evaluaciones{% endblock %}
 
-<a href="{% url 'logout' %}">Cerrar sesión</a>
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Modulo de consulta</p>
+        <h1>Listado de Calificaciones</h1>
+        <p>Usuario autenticado: {{ user.username }}</p>
+    </div>
+
+    <form method="post" action="{% url 'logout' %}">
+        {% csrf_token %}
+        <button class="link-button" type="submit">Cerrar sesion</button>
+    </form>
+</section>
+
+<section class="table-panel">
+    <div class="empty-state">
+        <strong>Aun no hay calificaciones registradas</strong>
+        <p>
+            Cuando el equipo agregue el modelo y los registros, este espacio
+            puede convertirse en una tabla con estudiante, nota, promedio y
+            acciones de edicion o eliminacion.
+        </p>
+    </div>
+</section>
+{% endblock %}
