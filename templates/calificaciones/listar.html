@@ -2,4 +2,65 @@
 
 <p>Usuario autenticado: {{ user.username }}</p>
 
+<<<<<<< origin/feature-create-calificaciones
 <a href="{% url 'logout' %}">Cerrar sesión</a>
+=======
+{% block content %}
+<section class="page-header">
+    <div>
+        <p class="eyebrow">Modulo de consulta</p>
+        <h1>Listado de Calificaciones</h1>
+        <p>Usuario autenticado: {{ user.username }}</p>
+    </div>
+
+    <div class="hero-actions">
+        <a class="button" href="{% url 'crear' %}">Crear calificacion</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="link-button" type="submit">Cerrar sesion</button>
+        </form>
+    </div>
+</section>
+
+<section class="table-panel">
+    {% if calificaciones %}
+        <div style="overflow-x:auto;">
+            <table style="width:100%; border-collapse:collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align:left; padding:1rem; border-bottom:1px solid var(--line);">Estudiante</th>
+                        <th style="text-align:left; padding:1rem; border-bottom:1px solid var(--line);">Identificacion</th>
+                        <th style="text-align:left; padding:1rem; border-bottom:1px solid var(--line);">Asignatura</th>
+                        <th style="text-align:center; padding:1rem; border-bottom:1px solid var(--line);">Nota 1</th>
+                        <th style="text-align:center; padding:1rem; border-bottom:1px solid var(--line);">Nota 2</th>
+                        <th style="text-align:center; padding:1rem; border-bottom:1px solid var(--line);">Nota 3</th>
+                        <th style="text-align:center; padding:1rem; border-bottom:1px solid var(--line);">Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for calificacion in calificaciones %}
+                        <tr>
+                            <td style="padding:1rem; border-bottom:1px solid var(--line);">{{ calificacion.nombre_estudiante }}</td>
+                            <td style="padding:1rem; border-bottom:1px solid var(--line);">{{ calificacion.identificacion }}</td>
+                            <td style="padding:1rem; border-bottom:1px solid var(--line);">{{ calificacion.asignatura }}</td>
+                            <td style="padding:1rem; border-bottom:1px solid var(--line); text-align:center;">{{ calificacion.nota1 }}</td>
+                            <td style="padding:1rem; border-bottom:1px solid var(--line); text-align:center;">{{ calificacion.nota2 }}</td>
+                            <td style="padding:1rem; border-bottom:1px solid var(--line); text-align:center;">{{ calificacion.nota3 }}</td>
+                            <td style="padding:1rem; border-bottom:1px solid var(--line); text-align:center; font-weight:800;">{{ calificacion.promedio }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <strong>Aun no hay calificaciones registradas</strong>
+            <p>
+                Cuando crees una calificacion desde el boton superior, aparecera
+                automaticamente en esta tabla con el promedio calculado.
+            </p>
+        </div>
+    {% endif %}
+</section>
+{% endblock %}
+>>>>>>> local
