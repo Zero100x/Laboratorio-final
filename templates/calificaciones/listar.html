@@ -1,10 +1,7 @@
-<h1>Listado de Calificaciones</h1>
+{% extends "base.html" %}
 
-<p>Usuario autenticado: {{ user.username }}</p>
+{% block title %}Calificaciones | Sistema de Evaluaciones{% endblock %}
 
-<<<<<<< origin/feature-create-calificaciones
-<a href="{% url 'logout' %}">Cerrar sesión</a>
-=======
 {% block content %}
 <section class="page-header">
     <div>
@@ -63,4 +60,3 @@
     {% endif %}
 </section>
 {% endblock %}
->>>>>>> local

@@ -1,24 +1,23 @@
-from django.shortcuts import render
-
-<<<<<<< origin/feature-create-calificaciones
-# Create your views here.
-from django.shortcuts import render
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
-=======
+from django.shortcuts import redirect, render
+
 from .forms import CalificacionForm, RegistroUsuarioForm
 from .models import Calificacion
->>>>>>> local
+
 
 def inicio(request):
     return render(request, 'inicio.html')
 
+
 @login_required
 def listar_calificaciones(request):
-<<<<<<< origin/feature-create-calificaciones
-    return render(request, 'calificaciones/listar.html')
-=======
     calificaciones = Calificacion.objects.order_by('-id')
-    return render(request, 'calificaciones/listar.html', {'calificaciones': calificaciones})
+    return render(
+        request,
+        'calificaciones/listar.html',
+        {'calificaciones': calificaciones},
+    )
 
 
 @login_required
@@ -33,6 +32,7 @@ def crear_calificacion(request):
 
     return render(request, 'calificaciones/crear.html', {'form': form})
 
+
 def registro(request):
     if request.method == 'POST':
         form = RegistroUsuarioForm(request.POST)
@@ -44,4 +44,3 @@ def registro(request):
         form = RegistroUsuarioForm()
 
     return render(request, 'registration/registro.html', {'form': form})
->>>>>>> local
