@@ -1,5 +1,7 @@
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect, render
+from django.db.models import Avg                  
 from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import CalificacionForm, RegistroUsuarioForm
@@ -12,6 +14,17 @@ def inicio(request):
 
 @login_required
 def listar_calificaciones(request):
+    calificaciones   = Calificacion.objects.order_by('-id')
+    promedio_general = Calificacion.objects.aggregate(  
+                           Avg('promedio')
+                       )['promedio__avg']               
+    return render(
+        request,
+        'calificaciones/listar.html',
+        {
+            'calificaciones':   calificaciones,
+            'promedio_general': promedio_general or 0,  
+        },
     calificaciones = Calificacion.objects.order_by('-id')
     return render(
         request,
@@ -29,6 +42,8 @@ def crear_calificacion(request):
             return redirect('listar')
     else:
         form = CalificacionForm()
+    return render(request, 'calificaciones/crear.html', {'form': form})
+
 
     return render(request, 'calificaciones/crear.html', {'form': form})
 
@@ -69,5 +84,4 @@ def registro(request):
             return redirect('listar')
     else:
         form = RegistroUsuarioForm()
-
     return render(request, 'registration/registro.html', {'form': form})
