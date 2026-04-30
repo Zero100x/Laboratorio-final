@@ -11,7 +11,9 @@
     </div>
 
     <div class="hero-actions">
-        <a class="button" href="{% url 'crear' %}">Crear calificacion</a>
+        {% if puede_modificar %}
+            <a class="button" href="{% url 'crear' %}">Crear calificacion</a>
+        {% endif %}
         <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
             <button class="link-button" type="submit">Cerrar sesion</button>
@@ -32,7 +34,9 @@
                         <th>Nota 2</th>
                         <th>Nota 3</th>
                         <th>Promedio</th>
-                        <th>Acciones</th>
+                        {% if puede_modificar %}
+                            <th>Acciones</th>
+                        {% endif %}
                     </tr>
                 </thead>
                 <tbody>
@@ -45,40 +49,23 @@
                             <td class="numeric">{{ calificacion.nota2 }}</td>
                             <td class="numeric">{{ calificacion.nota3 }}</td>
                             <td class="numeric">
-                                {% if calificacion.promedio >= 3.0 %}
-                                    <span style="padding:0.25rem 0.75rem;
-                                                 background:var(--primary-soft);
-                                                 color:var(--primary);
-                                                 border:1px solid #cfe7df;
-                                                 border-radius:2rem;
-                                                 font-weight:750;">
-                                        {{ calificacion.promedio }}
-                                    </span>
-                                {% else %}
-                                    <span style="padding:0.25rem 0.75rem;
-                                                 background:#fff1f0;
-                                                 color:var(--danger);
-                                                 border:1px solid #ffd2cf;
-                                                 border-radius:2rem;
-                                                 font-weight:750;">
-                                        {{ calificacion.promedio }}
-                                    </span>
-                                {% endif %}
+                                <span class="grade-badge {% if calificacion.promedio >= 3.0 %}approved{% else %}failed{% endif %}">
+                                    {{ calificacion.promedio }}
+                                </span>
                             </td>
-                            <td style="text-align:center;">
-                                <span style="color:var(--muted); font-size:0.85rem;">—</span>
-                            <td class="numeric strong">{{ calificacion.promedio }}</td>
-                            <td>
-                                <div class="row-actions">
-                                    <a class="button secondary" href="{% url 'editar' calificacion.id %}">
-                                        Editar
-                                    </a>
-                                    <form method="post" action="{% url 'eliminar' calificacion.id %}">
-                                        {% csrf_token %}
-                                        <button class="link-button" type="submit">Eliminar</button>
-                                    </form>
-                                </div>
-                            </td>
+                            {% if puede_modificar %}
+                                <td class="actions-cell">
+                                    <div class="row-actions">
+                                        <a class="button secondary" href="{% url 'editar' calificacion.id %}">
+                                            Editar
+                                        </a>
+                                        <form method="post" action="{% url 'eliminar' calificacion.id %}">
+                                            {% csrf_token %}
+                                            <button class="link-button" type="submit">Eliminar</button>
+                                        </form>
+                                    </div>
+                                </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                 </tbody>
@@ -95,21 +82,11 @@
     {% endif %}
 </section>
 
-<!-- Promedio General del Curso -->
-<div style="margin-top:1.5rem; padding:2rem;
-            background:var(--surface); border:1px solid var(--line);
-            border-radius:0.5rem; box-shadow:var(--shadow); text-align:center;">
-    <p style="margin:0 0 0.25rem; color:var(--muted); font-size:0.78rem;
-              font-weight:800; text-transform:uppercase; letter-spacing:2px;">
-        Promedio General del Curso
-    </p>
-    <p style="margin:0 0 0.5rem; font-size:clamp(2.5rem,5vw,4rem);
-              font-weight:800; color:var(--primary); line-height:1.1;">
-        {{ promedio_general|floatformat:2 }}
-    </p>
-    <p style="margin:0; color:var(--muted); font-size:0.9rem;">
+<section class="average-panel">
+    <p class="average-label">Promedio General del Curso</p>
+    <p class="average-value">{{ promedio_general|floatformat:2 }}</p>
+    <p class="average-copy">
         Calculado sobre <strong>{{ calificaciones.count }}</strong> registro(s)
     </p>
-</div>
-
-{% endblock %} 
+</section>
+{% endblock %}
