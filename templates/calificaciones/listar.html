@@ -10,20 +10,53 @@
         <p>Usuario autenticado: {{ user.username }}</p>
     </div>
 
-    <form method="post" action="{% url 'logout' %}">
-        {% csrf_token %}
-        <button class="link-button" type="submit">Cerrar sesion</button>
-    </form>
+    <div class="hero-actions">
+        <a class="button" href="{% url 'crear' %}">Crear calificacion</a>
+        <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="link-button" type="submit">Cerrar sesion</button>
+        </form>
+    </div>
 </section>
 
 <section class="table-panel">
-    <div class="empty-state">
-        <strong>Aun no hay calificaciones registradas</strong>
-        <p>
-            Cuando el equipo agregue el modelo y los registros, este espacio
-            puede convertirse en una tabla con estudiante, nota, promedio y
-            acciones de edicion o eliminacion.
-        </p>
-    </div>
+    {% if calificaciones %}
+        <div class="table-scroll">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Estudiante</th>
+                        <th>Identificacion</th>
+                        <th>Asignatura</th>
+                        <th>Nota 1</th>
+                        <th>Nota 2</th>
+                        <th>Nota 3</th>
+                        <th>Promedio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for calificacion in calificaciones %}
+                        <tr>
+                            <td>{{ calificacion.nombre_estudiante }}</td>
+                            <td>{{ calificacion.identificacion }}</td>
+                            <td>{{ calificacion.asignatura }}</td>
+                            <td class="numeric">{{ calificacion.nota1 }}</td>
+                            <td class="numeric">{{ calificacion.nota2 }}</td>
+                            <td class="numeric">{{ calificacion.nota3 }}</td>
+                            <td class="numeric strong">{{ calificacion.promedio }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <strong>Aun no hay calificaciones registradas</strong>
+            <p>
+                Cuando crees una calificacion desde el boton superior, aparecera
+                automaticamente en esta tabla con el promedio calculado.
+            </p>
+        </div>
+    {% endif %}
 </section>
 {% endblock %}

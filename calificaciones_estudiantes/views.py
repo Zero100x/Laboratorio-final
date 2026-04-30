@@ -2,14 +2,36 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
-from .forms import RegistroUsuarioForm
+from .forms import CalificacionForm, RegistroUsuarioForm
+from .models import Calificacion
+
 
 def inicio(request):
     return render(request, 'inicio.html')
 
+
 @login_required
 def listar_calificaciones(request):
-    return render(request, 'calificaciones/listar.html')
+    calificaciones = Calificacion.objects.order_by('-id')
+    return render(
+        request,
+        'calificaciones/listar.html',
+        {'calificaciones': calificaciones},
+    )
+
+
+@login_required
+def crear_calificacion(request):
+    if request.method == 'POST':
+        form = CalificacionForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('listar')
+    else:
+        form = CalificacionForm()
+
+    return render(request, 'calificaciones/crear.html', {'form': form})
+
 
 def registro(request):
     if request.method == 'POST':
