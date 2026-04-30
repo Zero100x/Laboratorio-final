@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Editar calificacion | Sistema de Evaluaciones{% endblock %}
+
+{% block content %}
+<section class="auth-layout">
+    <div>
+        <p class="eyebrow">Modulo de actualizacion</p>
+        <h1>Editar calificacion</h1>
+        <p class="lead">
+            Actualiza la calificacion del estudiante y guarda el nuevo promedio
+            en el sistema.
+        </p>
+    </div>
+
+    <div class="auth-panel">
+        <h2>Datos de la calificacion</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button" type="submit">Guardar cambios</button>
+        </form>
+        <p class="auth-footer">
+            <a href="{% url 'listar' %}">Volver al listado</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

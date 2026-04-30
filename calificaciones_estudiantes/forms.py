@@ -1,4 +1,8 @@
+from django import forms
 from django.contrib.auth.forms import UserCreationForm
+
+from .models import Calificacion
+from .permisos import ROL_ESTUDIANTE, asignar_rol_usuario
 
 
 class RegistroUsuarioForm(UserCreationForm):
@@ -25,3 +29,23 @@ class RegistroUsuarioForm(UserCreationForm):
         self.fields["password2"].help_text = (
             "Escribe la misma contrasena para verificarla."
         )
+
+    def save(self, commit=True):
+        user = super().save(commit=commit)
+        if commit:
+            asignar_rol_usuario(user, ROL_ESTUDIANTE)
+        return user
+
+
+class CalificacionForm(forms.ModelForm):
+    class Meta:
+        model = Calificacion
+        exclude = ("promedio",)
+        labels = {
+            "nombre_estudiante": "Nombre del estudiante",
+            "identificacion": "Identificacion",
+            "asignatura": "Asignatura",
+            "nota1": "Nota 1",
+            "nota2": "Nota 2",
+            "nota3": "Nota 3",
+        }

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Crear calificacion | Sistema de Evaluaciones{% endblock %}
+
+{% block content %}
+<section class="auth-layout">
+    <div>
+        <p class="eyebrow">Modulo de registro</p>
+        <h1>Crear calificacion</h1>
+        <p class="lead">
+            Registra una nueva calificacion para un estudiante y guarda el
+            promedio automaticamente en el sistema.
+        </p>
+    </div>
+
+    <div class="auth-panel">
+        <h2>Datos de la calificacion</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="button" type="submit">Guardar</button>
+        </form>
+        <p class="auth-footer">
+            <a href="{% url 'listar' %}">Volver al listado</a>
+        </p>
+    </div>
+</section>
+{% endblock %}

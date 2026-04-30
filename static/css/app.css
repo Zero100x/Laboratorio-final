@@ -243,7 +243,8 @@ h2 {
     font-weight: 750;
 }
 
-.auth-panel input {
+.auth-panel input,
+.auth-panel select {
     width: 100%;
     min-height: 2.75rem;
     padding: 0.75rem 0.85rem;
@@ -254,7 +255,8 @@ h2 {
     font: inherit;
 }
 
-.auth-panel input:focus {
+.auth-panel input:focus,
+.auth-panel select:focus {
     border-color: var(--primary);
     outline: 3px solid rgba(20, 108, 92, 0.16);
 }
@@ -305,6 +307,109 @@ h2 {
 
 .table-panel {
     overflow: hidden;
+}
+
+.table-scroll {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--line);
+    text-align: left;
+    white-space: nowrap;
+}
+
+.data-table th {
+    color: var(--muted);
+    background: #f8fafc;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+}
+
+.data-table .numeric {
+    text-align: center;
+}
+
+.data-table .strong {
+    color: var(--primary-dark);
+    font-weight: 800;
+}
+
+.grade-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 4.25rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2rem;
+    font-weight: 750;
+}
+
+.grade-badge.approved {
+    color: var(--primary);
+    background: var(--primary-soft);
+    border: 1px solid #cfe7df;
+}
+
+.grade-badge.failed {
+    color: var(--danger);
+    background: #fff1f0;
+    border: 1px solid #ffd2cf;
+}
+
+.actions-cell {
+    text-align: center;
+}
+
+.row-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.row-actions form {
+    margin: 0;
+}
+
+.average-panel {
+    margin-top: 1.5rem;
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+}
+
+.average-label {
+    margin: 0 0 0.25rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.average-value {
+    margin: 0 0 0.5rem;
+    color: var(--primary);
+    font-size: clamp(2.5rem, 4rem, 4rem);
+    font-weight: 800;
+    line-height: 1.1;
+}
+
+.average-copy {
+    margin: 0;
+    color: var(--muted);
+    font-size: 0.9rem;
 }
 
 .empty-state {
